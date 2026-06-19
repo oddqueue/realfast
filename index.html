@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="title" content="Real-Time Execution with Autoregressive Policies">
+  <meta name="description" content="Real-Time Execution with Autoregressive Policies">
+  <meta name="keywords" content="Real-time Execution, Vision-Language-Action Model">
+  <!-- TODO: List all authors -->
+  <!-- <meta name="author" content="FIRST_AUTHOR_NAME, SECOND_AUTHOR_NAME"> -->
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <!-- <meta property="og:type" content="article"> -->
+  <!-- TODO: Replace with your institution or lab name -->
+  <!-- <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME"> -->
+  <!-- TODO: Same as paper title above -->
+  <!-- <meta property="og:title" content="PAPER_TITLE"> -->
+  <!-- TODO: Same as description above -->
+  <!-- <meta property="og:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS"> -->
+  <!-- TODO: Replace with your actual website URL -->
+  <!-- <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"> -->
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <!-- <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2"> -->
+
+  <!-- Twitter -->
+  <!-- <meta name="twitter:card" content="summary_large_image"> -->
+  <!-- TODO: Replace with your lab/institution Twitter handle -->
+  <!-- <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE"> -->
+  <!-- TODO: Replace with first author's Twitter handle -->
+  <!-- <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE"> -->
+  <!-- TODO: Same as paper title above -->
+  <!-- <meta name="twitter:title" content="PAPER_TITLE"> -->
+  <!-- TODO: Same as description above -->
+  <!-- <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS"> -->
+  <!-- TODO: Same as social preview image above -->
+  <!-- <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview"> -->
+
+  <!-- Academic/Research Specific -->
+  <!-- <meta name="citation_title" content="PAPER_TITLE">
+  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
+  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf"> -->
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <!-- TODO: Replace with your paper title and authors -->
+  <title>Real-Time Execution with Autoregressive Policies</title>
+  
+  <!-- Favicon and App Icons -->
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico"> -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏩</text></svg>">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "PAPER_TITLE",
+    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "FIRST_AUTHOR_NAME",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "INSTITUTION_NAME"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "SECOND_AUTHOR_NAME",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "INSTITUTION_NAME"
+        }
+      }
+    ],
+    "datePublished": "2024-01-01",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CONFERENCE_OR_JOURNAL_NAME"
+    },
+    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
+    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
+    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
+    "abstract": "FULL_ABSTRACT_TEXT_HERE",
+    "citation": "BIBTEX_CITATION_HERE",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
+    },
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "RESEARCH_AREA_1"
+      },
+      {
+        "@type": "Thing", 
+        "name": "RESEARCH_AREA_2"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "INSTITUTION_OR_LAB_NAME",
+    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
+    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
+    "sameAs": [
+      "https://twitter.com/YOUR_TWITTER_HANDLE",
+      "https://github.com/YOUR_GITHUB_USERNAME"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- TODO: Replace with your paper title -->
+            <h1 class="title is-3 publication-title">Real-Time Execution with Autoregressive Policies</h1>
+            <div class="is-size-6 publication-authors">
+              <!-- TODO: Replace with your paper authors and their personal links -->
+              <span class="author-block">
+              <a href="https://oddqueue.github.io" target="_blank">Sangkyu Lee</a><sup>1</sup>
+              </span>
+              <span class="author-block">
+              <a href="https://eainx.github.io" target="_blank">Seohyeon Park</a><sup>2</sup>
+              </span>
+              <span class="author-block">
+              <a href="https://tackgeun.github.io" target="_blank">Tackgeun You</a><sup>1</sup>
+              </span>
+              <span class="author-block">
+              <a href="https://aviclu.github.io" target="_blank">Avi Caciularu</a><sup>3</sup>
+              </span>
+              <span class="author-block">
+              <a href="https://sites.google.com/site/idanszpektor" target="_blank">Idan Szpektor</a><sup>3</sup>
+              </span>
+              <span class="author-block">
+              <a href="https://www.hwasup.net" target="_blank">Hwasup Lim</a><sup>1</sup>
+              </span>
+              <span class="author-block">
+              <a href="https://yj-yu.github.io/home" target="_blank">Youngjae Yu</a><sup>2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <!-- TODO: Replace with your institution and conference/journal info -->
+              <!-- <span class="author-block">Institution Name<br>Conference name and year</span> -->
+              <span class="author-block">
+              </a><sup>1</sup>Korea Institute of Science and Technology
+              </span>
+              <span class="author-block">
+              </a><sup>2</sup>Seoul National University
+              </span>
+              <span class="author-block">
+              </a><sup>3</sup>Google Research
+              </span>
+            </div>
+
+            <div style="margin-top: 0rem; margin-bottom: 0.5rem;">
+              <video poster="" id="overview" autoplay muted playsinline webkit-playsinline height="100%" preload="metadata" style="width: 100%; border-radius: 8px;">
+                <source src="static/videos/overview.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <script>
+              const overviewVideo = document.getElementById('overview');
+
+              overviewVideo.addEventListener('mouseenter', () => {
+                overviewVideo.setAttribute('controls', 'controls');
+              });
+
+              overviewVideo.addEventListener('mouseleave', () => {
+                overviewVideo.removeAttribute('controls');
+              });
+
+              overviewVideo.addEventListener('click', () => {
+              if (overviewVideo.hasAttribute('controls')) {
+                overviewVideo.removeAttribute('controls');
+              } else {
+                overviewVideo.setAttribute('controls', 'controls');
+              }
+              });
+
+              overviewVideo.addEventListener('ended', () => {
+                overviewVideo.removeAttribute('controls');
+              });
+            </script>
+
+          <div class="tldr">
+          <strong>TL;DR:</strong> Autoregressive policies can support real-time execution, despite having relatively high inference latency. This is because it depends not on the inference delay itself, but on the guarantee of a continuous stream of actions from the policies. In this sense, we demonstrate how to tailor autoregressive policies to achieve successful real-time execution.
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                    <!-- TODO: Update with your arXiv paper ID -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2606.13355.pdf" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+                  <!-- TODO: Replace with your GitHub repository URL -->
+                  <!-- <span class="link-block">
+                    <a href="https://oddqueue.github.io/realfast" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (Coming soon!)</span>
+                  </a>
+                </span> -->
+                <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark" 
+                  style="pointer-events: none; opacity: 0.5;">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code (Coming soon!)</span>
+                </a>
+              </span>
+
+                <!-- TODO: Update with your arXiv paper ID -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2606.13355" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paper abstract -->
+<!-- <section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Real-time execution, enabled by asynchronous inference that ensures both smooth action trajectories and fast reactivity, is critical for realistic deployments of large-scale Vision-Language-Action models. However, recent work on real-time execution primarily focuses on variants of diffusion policies, even though it is more critical for autoregressive policies given their slower rollout speed in synchronous inference. In contrast, we demonstrate that autoregressive policies can achieve real-time execution by adjusting the tokenization horizon and applying constrained decoding, thereby guaranteeing strict latency bounds that enable multi-trajectory decoding to maximize performance. Across simulated and real-world environments, we find that the autoregressive policy consistently outperforms its equivalent-level flow-matching policy counterpart while achieving significantly improved task completion speeds from synchronous inference. Coupled with the inherent advantages of autoregressive policies, such as faster convergence and better generalizability in instruction-following, these results confirm that autoregressive policies can remain a competitive policy type supporting real-time execution.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End paper abstract -->
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h3 class="title is-5 has-text-centered">When Do We Achieve the Real-time Execution?</h3>
+      <div style="margin-top: 0rem; margin-bottom: 1rem;">
+        <video poster="" id="realtime" autoplay muted playsinline webkit-playsinline height="100%" preload="metadata" style="width: 100%; border-radius: 8px;">
+          <source src="static/videos/realtime.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <script>
+        const realtimeVideo = document.getElementById('realtime');
+
+        realtimeVideo.addEventListener('mouseenter', () => {
+          realtimeVideo.setAttribute('controls', 'controls');
+        });
+
+        realtimeVideo.addEventListener('mouseleave', () => {
+          realtimeVideo.removeAttribute('controls');
+        });
+
+        realtimeVideo.addEventListener('click', () => {
+        if (realtimeVideo.hasAttribute('controls')) {
+          realtimeVideo.removeAttribute('controls');
+        } else {
+          realtimeVideo.setAttribute('controls', 'controls');
+        }
+        });
+
+        realtimeVideo.addEventListener('ended', () => {
+          realtimeVideo.removeAttribute('controls');
+        });
+      </script>
+      
+      <div class="realtime">
+      Generally, the modifier <em>real-time</em> follows after the system that can <em>guarantee</em> a response within a predefined time limit.
+      Then, for a robot controller that expects the endpoint robot to operate continuously, except when the policy $\pi_\theta$ induces a pause in its intention, <strong>real-time execution</strong> can be defined as a scenario in which the policy can provide an action $\mathbf{a}_t$ at every timestamp $t$.<br>
+      <br>
+      When can real-time execution be achieved in a policy using Vision-Language Action models (VLAs), which adopt open-loop control because of inference latency generally higher than the command interval $\Delta t$?
+      One intuitive solution is to maintain the action queue $\mathbf{A}_Q$, which stores the actions the controller will consume, as nonempty for all $t$.
+      Specifically, given the non-modifiable horizon $m$, which is the prefix length of $\mathbf{A}_Q$ that the policy cannot modify, the delay $d_m$ for supplying a new $m$-length action chunk must be the same or shorter than $m$ in <em>repeated asynchronous</em> inference with execution horizon $s$:
+      $$ d_m \le s \le m $$
+      Real-time execution enables <strong>faster rollout speed</strong> by eliminating the pausing time in synchronous inference.
+      However, this also reveals that it is independent of the reactivity or the smoothness between the actions the controller consumes during the delay and the newly supplied action chunk; it is <strong>simply enough to guarantee $\boldsymbol{d_m \le m}$</strong> for achieving real-time execution.<br>
+      <br>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h3 class="title is-5 has-text-centered">Are Autoregressive Policies Reasonable for Real-time Execution?</h3>
+
+      <figure class="image is-fullwidth" style="margin-top: 0rem; margin-bottom: 1rem;">
+        <img src="./static/images/analysis.png">
+      </figure>
+
+      <div class="analysis">
+      <strong>$\boldsymbol{\pi_0}$-FAST</strong>, which is a representative of modern autoregressive VLAs, has advantages such as faster convergence and better generalizability in instruction following, but also shows the disadvantage of higher inference latency due to sequential decoding.
+      Therefore, given that longer pausing time from longer inference latency leads to slower rollout speed in synchronous inference, real-time execution plays an important role to retain only the advantage of autoregressive policies.<br>
+      <br>
+      In the real-time execution, inference latency is tied to <em>reactivity</em> rather than to pausing time; we must examine whether reasonable reactivity can be achieved while achieving real-time execution.
+      However, we must note that real-time execution requires only maintaining $d_m \le m$, <strong>regardless of the choice of $\boldsymbol{m}$</strong>.
+      In other words, we can adjust the tokenization horizon $m \cdot \Delta t$ to reduce decoding steps that govern the inference latency $\delta_{t, m}$, and we can secure a reasonable level of average $\delta_{t, m}$.
+      In particular, since the effect of $d_m < m$ from tokenization has a smaller impact on performance than the effect of increased $d_m$, autoregressive policies can also support reasonable real-time execution by selecting an appropriate tokenization horizon.<br>
+      <br>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h3 class="title is-5 has-text-centered">How Can We Tailor Autoregressive Policies for Real-time Execution?</h3>
+
+      <figure class="image is-fullwidth" style="margin-top: 0rem; margin-bottom: 1rem;">
+        <img src="./static/images/method.png">
+      </figure>
+
+      <div class="method">
+      Therefore, after a reasonable choice of $m \cdot \Delta t$, the factors we need to consider are the smoothness of the action trajectory, the guarantee of real-time execution, and performance maximization.
+      We apply simple modifications and fine-tuning to $\pi_0$-FAST, denoted as <strong>$\boldsymbol{\pi_0}$-REALFAST</strong>, and demonstrate real-time execution with autoregressive policies by following approaches:<br>
+      <br>
+      <strong>1. Separately tokenize action chunk horizon $\boldsymbol{H}\mathbf{=2}\boldsymbol{m}$ to enable conditioning on near-future actions in $\mathbf{A}_\boldsymbol{Q}$ for smoothness.</strong><br>
+      <strong>2. Minimize idle computation time from synchronization by sampling multiple trajectories marginally increases latency.</strong><br>
+      <strong>3. Introduce constrained decoding based on dynamic programming, which guarantees decoding actions within $\boldsymbol{d_m}\,\mathbf{\le}\,\boldsymbol{m}$.</strong><br>
+      </div>
+
+      <div style="margin-top: 1rem; margin-bottom: 1rem;">
+        <video poster="" id="examples" autoplay muted playsinline webkit-playsinline height="100%" preload="metadata" style="width: 100%; border-radius: 8px;">
+          <source src="static/videos/examples.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <script>
+        const examplesVideo = document.getElementById('examples');
+
+        examplesVideo.addEventListener('mouseenter', () => {
+          examplesVideo.setAttribute('controls', 'controls');
+        });
+
+        examplesVideo.addEventListener('mouseleave', () => {
+          examplesVideo.removeAttribute('controls');
+        });
+
+        examplesVideo.addEventListener('click', () => {
+        if (examplesVideo.hasAttribute('controls')) {
+          examplesVideo.removeAttribute('controls');
+        } else {
+          examplesVideo.setAttribute('controls', 'controls');
+        }
+        });
+
+        examplesVideo.addEventListener('ended', () => {
+          examplesVideo.removeAttribute('controls');
+        });
+      </script>
+
+      <div class="examples">
+      Across <strong>LIBERO environment</strong> and <strong>DROID zero-shot deployment</strong>, we confirm that $\pi_0$-REALFAST achieves faster rollout speed and better performance while maintaining the original advantages of faster convergence and better generalizability in instruction following, as demonstrated by $\pi_0$-FAST.
+      In particular, $\pi_0$-REALFAST shows superior performance compared to the real-time execution of $\pi_0$, an equivalent-level flow-matching policy using a small action expert, while approaching performance comparable to the successor model, $\pi_{0.5}$.
+      This demonstrates that autoregressive policies remain a competitive policy type by overcoming the disadvantage of slow rollout speed with appropriate considerations for real-time execution.<br>
+      <!-- <br> -->
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop" style="margin-top: -3rem; margin-bottom: 0rem;">
+      
+      <style>
+        #results-carousel .slider-container {
+          padding-bottom: 3.0rem !important; 
+        }
+        #results-carousel .slider-pagination {
+          bottom: 0.5rem !important;
+        }
+
+        .carousel-media-container {
+          height: 400px;
+          display: flex; 
+          justify-content: center; 
+          align-items: center;
+          width: 100%;
+        }
+
+        @media screen and (max-width: 768px) {
+          .carousel-media-container {
+            height: 130px;
+          }
+        }
+      </style>
+
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="carousel-media-container">
+            <img src="./static/images/droid.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="carousel-media-container">
+            <img src="./static/images/libero.png" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+          </div>
+        </div>
+
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">Citation</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{lee2026real,
+  title={Real-Time Execution with Autoregressive Policies},
+  author={Lee, Sangkyu and Park, Seohyeon and You, Tackgeun and Caciularu, Avi and Szpektor, Idan and Lim, Hwasup and Yu, Youngjae},
+  journal={arXiv preprint arXiv:2606.13355},
+  year={2026}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
